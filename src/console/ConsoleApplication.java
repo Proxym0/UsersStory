@@ -1,20 +1,28 @@
 package console;
 
+import entity.Phone;
 import entity.RoleEnum;
 import entity.User;
 import service.UserService;
 import storage.JDBCUsersStorage;
 import validator.Validator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import static console.ConsoleReader.readInt;
 import static console.ConsoleReader.readString;
 import static console.ConsoleWriter.write;
+import static validator.Validator.isValidNumberPhone;
 
 
 public class ConsoleApplication {
     JDBCUsersStorage jdbcUsersStorage = new JDBCUsersStorage();
+    RoleController roleController = new RoleController();
+    UserService userService = new UserService();
 
     public void run() {
         while (true) {
@@ -84,9 +92,10 @@ public class ConsoleApplication {
         String firstname = userInput("Inter name", "Invalid name", Validator::isValidUsername);
         String lastname = userInput("Inter lastname", "Invalid name", Validator::isValidLastname);
         String email = userInput("Inter email", "Invalid mail", Validator::isValidEmail);
-        String phone = readString();
-        UserService userService = new UserService();
-        userService.create(firstname, lastname, email, phone);
+        String phone = userInput("Inter numbers", "Invalid number", Validator::isValidNumberPhone);
+        String numberPhone = Arrays.toString(phone.toCharArray());
+        Set<RoleEnum> roleEnums = roleController.inputRoles();
+        userService.create(firstname, lastname, email, numberPhone,roleEnums);
     }
 
     private String userInput(String message, String inputInvalidMessage, Predicate<String> validator) {
@@ -103,5 +112,17 @@ public class ConsoleApplication {
         while (!isValid);
         return input;
     }
+//    public List<Phone> addPhone(Phone phone) {
+//        List<Phone> phones = new ArrayList<>();
+//        String ph = String.valueOf(phones.add(phone));
+//        String[] arrNumber = ph.split(" ");
+//
+//        for (String number : arrNumber) {
+//            Phone phone1 = new Phone(number);
+//            phones.add(phone1);
+//        }
+//        return phones;
+//    }
+
 
 }

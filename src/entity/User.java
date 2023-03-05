@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -8,8 +9,9 @@ public class User {
     private String lastname;
     private String email;
     private String phone;
-    private RoleEnum role;
+    private Set<RoleEnum> roleSet=new HashSet<>();
     private List<Phone> phoneNumbers;
+
 
     public User(String name, String lastname, String email, String phone) {
         this.name = name;
@@ -17,13 +19,16 @@ public class User {
         this.email = email;
         this.phone = phone;
     }
+    public void addRole (RoleEnum role){
+        roleSet.add(role);
+    }
 
-    public User(String name, String lastname, String email, String phone, RoleEnum role) {
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.phone = phone;
-        this.role = role;
+    public Set<RoleEnum> getRole() {
+        return roleSet;
+    }
+
+    public void setRole(Set<RoleEnum> role) {
+        this.roleSet = role;
     }
 
     public User() {

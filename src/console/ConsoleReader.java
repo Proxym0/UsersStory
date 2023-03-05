@@ -7,6 +7,10 @@ public class ConsoleReader {
     public static String readString(){
         return SCANNER.next();
     }
+    public static String readLine(){
+        return SCANNER.nextLine();
+    }
+
     public static  int readInt(){
         return SCANNER.nextInt();
     }
